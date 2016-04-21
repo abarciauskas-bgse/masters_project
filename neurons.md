@@ -84,4 +84,12 @@ plt.show()
 
 ![losses](sketches/images/figure_1.png)
 
+## Other ideas for visualization
+
+![simple neuron giff](sketches/output_laxktO.gif)
+
+![waves1](sketches/images/waves1.png)
+![waves2](sketches/images/waves2.png)
+![circuit](sketches/images/circuit.png)
+
 [1]: http://cs231n.github.io/neural-networks-1/
