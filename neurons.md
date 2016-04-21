@@ -10,7 +10,7 @@ To understand, we start with a [toy example][1]:
 
 We can reveal that this is challenging with this particular data set with the following plot:
 
-![with plot](sketches/images/data_with_plot.png)
+![with plot](sketches/images/data_with_plot.jpeg)
 
 ![with plane](sketches/images/with_plane.JPG)
 
