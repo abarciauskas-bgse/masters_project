@@ -16,4 +16,3 @@
 # Curiousities
 
 > Large modern neural networks are even harder to study because of their size; for example, understanding the widely-used AlexNet DNN involves making sense of the values taken by the 60 mil- lion trained network parameters.
-
