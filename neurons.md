@@ -10,9 +10,9 @@ To understand, we start with a [toy example][1]:
 
 We can reveal that this is challenging with this particular data set with the following plot:
 
-![with plot](sketches/images/data_with_plot.jpeg)
+![with plot](sketches/images/data_plot.jpeg)
 
-![with plane](sketches/images/with_plane.JPG)
+![with plane](sketches/images/plane.JPG)
 
 In addition to the given input (axon), we will denote **`x`**, A neuron in a neural network is comprised of the following components:
 

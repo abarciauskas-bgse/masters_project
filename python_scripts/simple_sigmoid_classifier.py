@@ -38,7 +38,6 @@ for iter in range(iters):
     true_class_prob = f_neuron1 if y_obs == 1 else (1-f_neuron1)
     loss_neuron1 = -true_class_prob + np.log(np.sum([np.exp(f_neuron1), np.exp(1-f_neuron1)]))
     #loss_neuron1 = 1 - true_class_prob
-    print(loss_neuron1)
     # equivalent to evaluating: 
     # loss_neuron1_simple = np.abs(y_obs - f_neuron1)
     # print 'loss: ' + str(loss_neuron1 - loss_neuron1_simple)
