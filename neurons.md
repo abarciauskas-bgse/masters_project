@@ -10,7 +10,7 @@ To understand, we start with a [toy example][1]:
 
 We can reveal that this is challenging with this particular data set with the following plot:
 
-![with plot](sketches/images/data_plot.jpeg)
+![with plot](sketches/images/data_plot.png)
 
 ![with plane](sketches/images/plane.JPG)
 
@@ -91,5 +91,7 @@ plt.show()
 ![waves1](sketches/images/waves1.png)
 ![waves2](sketches/images/waves2.png)
 ![circuit](sketches/images/circuit.png)
+
+### And more from others...
 
 [1]: http://cs231n.github.io/neural-networks-1/
