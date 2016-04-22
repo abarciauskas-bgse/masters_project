@@ -10,7 +10,7 @@ To understand, we start with a [toy example][1]:
 
 We can reveal that this is challenging with this particular data set with the following plot:
 
-![with plot](sketches/images/data_plot.jpeg)
+![with plot](sketches/images/data_plot.png)
 
 ![with plane](sketches/images/plane.JPG)
 
@@ -82,6 +82,7 @@ line = plt.plot(x, loss_all[0],  x, loss_all[1], x, loss_all[2], x, loss_all[3],
 plt.show()
 ```
 
+This works because we are only trying to classify one data point at a time.
 ![losses](sketches/images/figure_1.png)
 
 ## Other ideas for visualization
@@ -91,5 +92,8 @@ plt.show()
 ![waves1](sketches/images/waves1.png)
 ![waves2](sketches/images/waves2.png)
 ![circuit](sketches/images/circuit.png)
+![waves3](sketches/images/waves3.png)
+
+### And more from others...
 
 [1]: http://cs231n.github.io/neural-networks-1/
