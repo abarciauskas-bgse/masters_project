@@ -92,6 +92,7 @@ This works because we are only trying to classify one data point at a time.
 ![waves1](sketches/images/waves1.png)
 ![waves2](sketches/images/waves2.png)
 ![circuit](sketches/images/circuit.png)
+![waves3](sketches/images/waves3.png)
 
 ### And more from others...
 
