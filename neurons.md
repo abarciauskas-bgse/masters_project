@@ -97,11 +97,17 @@ This works because we are only trying to classify one data point at a time.
 ### Inspirations
 
 [https://www.jasondavies.com/lloyd/](https://www.jasondavies.com/lloyd/)
+
 [https://www.youtube.com/watch?v=t8g-iYGHpEA](https://www.youtube.com/watch?v=t8g-iYGHpEA)
+
 [https://www.youtube.com/watch?v=kPRA0W1kECg&ebc=ANyPxKoLSFpC4J1Ueq0R-X9jstKft6GHKRxwGltmJN3zXpHPaIPmsQ-sLB-Bo-0d2-ThGumIgaEbipmca4xLPG3r6wV-6PY76w](https://www.youtube.com/watch?v=kPRA0W1kECg&ebc=ANyPxKoLSFpC4J1Ueq0R-X9jstKft6GHKRxwGltmJN3zXpHPaIPmsQ-sLB-Bo-0d2-ThGumIgaEbipmca4xLPG3r6wV-6PY76w)
+
 [http://daftpunk.themaninblue.com/](http://daftpunk.themaninblue.com/)
+
 [http://guns.periscopic.com/?year=2013](http://guns.periscopic.com/?year=2013)
+
 [https://www.youtube.com/watch?v=4M0soXr2cHA](https://www.youtube.com/watch?v=4M0soXr2cHA)
+
 [http://www.facebookstories.com/stories/2200/data-visualization-photo-sharing-explosions](http://www.facebookstories.com/stories/2200/data-visualization-photo-sharing-explosions)
 
 [1]: http://cs231n.github.io/neural-networks-1/
