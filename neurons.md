@@ -82,6 +82,7 @@ line = plt.plot(x, loss_all[0],  x, loss_all[1], x, loss_all[2], x, loss_all[3],
 plt.show()
 ```
 
+This works because we are only trying to classify one data point at a time.
 ![losses](sketches/images/figure_1.png)
 
 ## Other ideas for visualization
