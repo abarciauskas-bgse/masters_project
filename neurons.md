@@ -1,4 +1,6 @@
-# Visualizing neurons from a neural network
+# Visualizing Neurons for a Neural Network
+
+*This post is part of ongoing work on my master's project in visualizing neural networks for a general public*
 
 What are neurons for a neural network?
 
@@ -88,6 +90,13 @@ This works because we are only trying to classify one data point at a time.
 ## Other ideas for visualization
 
 ![simple neuron giff](sketches/output_laxktO.gif)
+
+#### New
+
+![with slots](sketches/output_B7w9Ax.gif)
+![without slots](sketches/output_Yuj5AX.gif)
+
+#### Inspired by sound and circuits
 
 ![waves1](sketches/images/waves1.png)
 ![waves2](sketches/images/waves2.png)
