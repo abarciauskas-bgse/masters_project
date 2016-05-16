@@ -4,7 +4,7 @@ def text_to_dict(input_string):
     # turn a string int a dictionary
     term_dictionary = {}
     # set is nice - returns alphabetized version, so if we have all letters they should be in the correct order!
-    letters = list(set(list(input_string.lower().replace(" ",""))))
+    letters = list(set(list(input_string.lower())))
     for i, letter in enumerate(letters):
         term_dictionary[letter] = i
     return term_dictionary
@@ -16,7 +16,7 @@ targets     = full_string[1:len(full_string)]
 term_dictionary = text_to_dict(full_string)
 V               = len(term_dictionary)
 
-full_string_as_list = list(full_string.lower().replace(" ",""))
+full_string_as_list = list(full_string.lower())
 inputs = full_string_as_list[0:(len(full_string_as_list)-1)]
 targets = full_string_as_list[1:len(full_string_as_list)]
 
