@@ -36,7 +36,7 @@ def loss_function(inputs, targets, previous_hidden_state):
         dWxh += np.dot(dhraw, x_state[t].T)
         dWhh += np.dot(dhraw, hidden_state[t-1].T)        
         dhnext = np.dot(Whh.T, dhraw)
-    return loss, dWxh, dWhh, dWhy, dbh, dby
+    return loss, dWxh, dWhh, dWhy, dbh, dby, hidden_state[len(inputs)-1]
 
 learning_rate = 1e-1
 # number of neurons per layer (for now just one layer)
@@ -62,7 +62,7 @@ def train(data, vocab_size, max_iters):
             previous_hidden_state = np.zeros((hidden_size,1))
         inputs = data[pointer:(batch_size + pointer)]
         targets = data[(pointer + 1):(batch_size + pointer + 1)]
-        loss, dWxh, dWhh, dWhy, dbh, dby = loss_function(inputs, targets, previous_hidden_state)
+        loss, dWxh, dWhh, dWhy, dbh, dby, previous_hidden_state = loss_function(inputs, targets, previous_hidden_state)
         # do adagrad update on parameters
         # perform parameter update with Adagrad
         for param, dparam, mem in zip([Wxh, Whh, Why, bh, by], 
