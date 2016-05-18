@@ -50,14 +50,15 @@ Why = np.random.randn(vocab_size, hidden_size)*0.01 # hidden to output
 bh  = np.zeros((hidden_size, 1)) # hidden bias
 by  = np.zeros((vocab_size, 1)) # output bias
 losses = []
-batch_size = 25
 
-def train(data, vocab_size, max_iters):
+def train(data, vocab_size, max_iters, batch_size = 25):
     # Have some memory of Weights for adagrad:
     mWxh, mWhh, mWhy = np.zeros_like(Wxh), np.zeros_like(Whh), np.zeros_like(Why)
     mbh, mby = np.zeros_like(bh), np.zeros_like(by)
     pointer = 0
     previous_hidden_state = np.zeros((hidden_size,1))
+    # loss at iter 0
+    smooth_loss = -np.log(1.0/vocab_size)*batch_size
     for i in range(max_iters):
         if pointer + batch_size + 1 > len(data):
             pointer = 0
@@ -72,7 +73,8 @@ def train(data, vocab_size, max_iters):
                                       [mWxh, mWhh, mWhy, mbh, mby]):
             mem += dparam * dparam
             param += -learning_rate * dparam / np.sqrt(mem + 1e-8) # adagrad update
-        losses.append(loss)
+        smooth_loss = smooth_loss * 0.999 + loss * 0.001
+        losses.append(smooth_loss)
         pointer += batch_size
 
     return {'losses': losses, 'hidden_state': previous_hidden_state}

@@ -82,23 +82,35 @@ def loss_function(inputs, targets, hprev_l0, hprev_l1):
 learning_rate = 1e-1
 # number of neurons per layer (for now just one layer)
 hidden_size = 10
-# model parameters (x - input, l0 - layer 0 output, y - layer 1 output)
-# Layer 0
-Wxh0  = np.random.randn(hidden_size, vocab_size)*0.01 # input x to hidden l0
-Wh0h0 = np.random.randn(hidden_size, hidden_size)*0.01 # hidden l0 to hidden l0
-bh0   = np.zeros((hidden_size, 1)) # hidden bias l0
-Wh0l0 = np.random.randn(vocab_size, hidden_size)*0.01 # hidden l0 to l0
-bl0   = np.zeros((vocab_size, 1)) # l0 output bias
-# Layer 1 - input is l0
-Wl0h1 = np.random.randn(hidden_size, vocab_size)*0.01 # input to hidden l1
-Wh1h1 = np.random.randn(hidden_size, hidden_size)*0.01 # hidden l1 to hidden l1
-bh1   = np.zeros((hidden_size, 1)) # hidden bias l1
-Wh1y  = np.random.randn(vocab_size, hidden_size)*0.01 # hidden l1 to output y
-by    = np.zeros((vocab_size, 1)) # output bias
-losses = []
-batch_size = 25
 
-def train(data, vocab_size, max_iters):
+def reset_params():
+    # model parameters (x - input, l0 - layer 0 output, y - layer 1 output)
+    # Layer 0
+    global Wxh0
+    Wxh0  = np.random.randn(hidden_size, vocab_size)*0.01 # input x to hidden l0
+    global Wh0h0
+    Wh0h0 = np.random.randn(hidden_size, hidden_size)*0.01 # hidden l0 to hidden l0
+    global bh0
+    bh0   = np.zeros((hidden_size, 1)) # hidden bias l0
+    global Wh0l0
+    Wh0l0 = np.random.randn(vocab_size, hidden_size)*0.01 # hidden l0 to l0
+    global bl0
+    bl0   = np.zeros((vocab_size, 1)) # l0 output bias
+    # Layer 1 - input is l0
+    global Wl0h1
+    Wl0h1 = np.random.randn(hidden_size, vocab_size)*0.01 # input to hidden l1
+    global Wh1h1
+    Wh1h1 = np.random.randn(hidden_size, hidden_size)*0.01 # hidden l1 to hidden l1
+    global bh1
+    bh1   = np.zeros((hidden_size, 1)) # hidden bias l1
+    global Wh1y
+    Wh1y  = np.random.randn(vocab_size, hidden_size)*0.01 # hidden l1 to output y
+    global by
+    by    = np.zeros((vocab_size, 1)) # output bias
+
+def train(data, vocab_size, max_iters, batch_size = 25, sample = False):
+    reset_params()
+    losses = []
     # Have some memory of Weights for adagrad:
     mWxh0, mWh0h0, mbh0, mWh0l0, mbl0, mWl0h1, mWh1h1, mbh1, mWh1y, mby = \
       np.zeros_like(Wxh0), np.zeros_like(Wh0h0), np.zeros_like(bh0), np.zeros_like(Wh0l0), \
@@ -106,41 +118,51 @@ def train(data, vocab_size, max_iters):
     pointer = 0
     hprev_l0 = np.zeros((hidden_size,1))
     hprev_l1 = np.zeros((hidden_size,1))
-    for i in range(max_iters):
+    smooth_loss = -np.log(1.0/vocab_size)*batch_size
+    for i in range(max_iters):    
         if pointer + batch_size + 1 > len(data):
             pointer = 0
             hprev_l0 = np.zeros((hidden_size,1))
             hprev_l1 = np.zeros((hidden_size,1))
         inputs = data[pointer:(batch_size + pointer)]
         targets = data[(pointer + 1):(batch_size + pointer + 1)]
+
+        # sample from the model now and then
+        if sample and i > 0 and i % round(max_iters/10) == 0:
+            lidx = char_to_ix['t']
+            sample_ix = sample(hprev_l0, hprev_l1, lidx, 200)
+            txt = ''.join(ix_to_char[ix] for ix in sample_ix)
+            print '----\n %s \n----' % (txt, )
+
         loss, \
             dWxh0, dWh0h0, dbh0, dWh0l0, dbl0, dWl0h1, dWh1h1, dbh1, dWh1y, dby, \
             hprev_l0, hprev_l1 = loss_function(inputs, targets, hprev_l0, hprev_l1)
         # do adagrad update on parameters
         # perform parameter update with Adagrad
-        for param, dparam, mem in zip([Wxh0, Wh0h0, bh0, Wh0l0, bl0, Wl0h1, Wh1h1, bh1, Wh1y, by], 
+        for param, dparam, mem in zip([Wxh0,  Wh0h0,   bh0,  Wh0l0,  bl0,  Wl0h1,  Wh1h1,  bh1,  Wh1y, by], 
                                       [dWxh0, dWh0h0, dbh0, dWh0l0, dbl0, dWl0h1, dWh1h1, dbh1, dWh1y, dby], 
                                       [mWxh0, mWh0h0, mbh0, mWh0l0, mbl0, mWl0h1, mWh1h1, mbh1, mWh1y, mby]):
             mem += dparam * dparam
             param += -learning_rate * dparam / np.sqrt(mem + 1e-8) # adagrad update          
-        losses.append(loss)
+        smooth_loss = smooth_loss * 0.999 + loss * 0.001
+        losses.append(smooth_loss)
         pointer += batch_size
 
-    return {'losses': losses, 'hs': hprev_l0}
+    return {'losses': losses, 'h0': hprev_l0, 'h1': hprev_l1}
 
-# def sample(h, seed_idx, nsamples):
-#     sampled_idcs = []
-#     x = np.zeros((vocab_size, 1))
-#     x[seed_idx] = 1
-#     for i in range(nsamples):
-#         h = np.tanh(np.dot(Wxh, x) + np.dot(Whh, h) + bh)
-#         y = np.dot(Why, h) + by
-#         h1 = np.tanh(np.dot(Wxh1, y) + np.dot(Whh1, h) + bh1)
-#         y1 = np.dot(Why1, h1) + by1
-#         p = np.exp(y1)/np.sum(np.exp(y1))
-#         p = np.exp(y)/np.sum(np.exp(y))
-#         ix = np.random.choice(range(vocab_size), p = p.ravel())
-#         x = np.zeros((vocab_size, 1))
-#         x[ix] = 1
-#         sampled_idcs.append(ix)
-#     return sampled_idcs
+def sample(h0prev, h1prev, seed_idx, nsamples):
+    sampled_idcs = []
+    x = np.zeros((vocab_size, 1))
+    x[seed_idx] = 1
+    for i in range(nsamples):
+        h0 = np.tanh(np.dot(Wxh0, x) + np.dot(Wh0h0, h0prev) + bh0)
+        l0 = np.dot(Wh0l0, h0) + bl0
+        h1 = np.tanh(np.dot(Wl0h1, l0) + np.dot(Wh1h1, h1prev) + bh1)
+        y = np.dot(Wh1y, h1) + by
+        p = np.exp(y)/np.sum(np.exp(y))
+        ix = np.random.choice(range(vocab_size), p = p.ravel())
+        x = np.zeros((vocab_size, 1))
+        x[ix] = 1
+        sampled_idcs.append(ix)
+    return sampled_idcs
+
