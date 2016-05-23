@@ -81,7 +81,7 @@ def loss_function(inputs, targets, hprev_l0, hprev_l1):
 
 learning_rate = 1e-1
 # number of neurons per layer (for now just one layer)
-hidden_size = 10
+hidden_size = 1000  
 
 def reset_params():
     # model parameters (x - input, l0 - layer 0 output, y - layer 1 output)
