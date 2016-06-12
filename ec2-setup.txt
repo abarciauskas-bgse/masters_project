@@ -5,6 +5,8 @@ sudo pip install --upgrade pip
 sudo pip install ipython
 sudo pip install jupyter
 sudo pip install keras
+sudo apt-get install libhdf5-dev
+sudo pip install h5py
 sudo pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git --user
 
 # install midi from github
@@ -29,3 +31,5 @@ THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 ipython notebook
 # sudo chown -R ubuntu:ubuntu /home/ubuntu/
 
 scp -r ubuntu@ec2-54-175-118-25.compute-1.amazonaws.com ywc85l9kv6h4axmnstod.mid
+
+scp -i ~/.ssh/abarciauskas-bgse.pem -r /Users/aimeebarciauskas/Desktop/nets/1pemdvjgnq70k2b9scf3.h5 ubuntu@ec2-54-175-118-25.compute-1.amazonaws.com:
