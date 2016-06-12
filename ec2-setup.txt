@@ -1,0 +1,31 @@
+ssh -i ~/.ssh/abarciauskas-bgse.pem ubuntu@ec2-54-175-118-25.compute-1.amazonaws.com
+
+# One time on the instance
+sudo pip install --upgrade pip
+sudo pip install ipython
+sudo pip install jupyter
+sudo pip install keras
+sudo pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git --user
+
+# install midi from github
+git clone https://github.com/vishnubob/python-midi
+cd python-midi
+sudo python setup.py install
+cd ..
+
+#clone my repo
+git clone https://github.com/abarciauskas-bgse/masters_project
+cd masters_project
+
+# or artur's
+git clone https://github.com/arturgs/polytrackNN
+cd polytrackNN
+
+THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 ipython notebook
+
+#ssh -i ~/.ssh/abarciauskas-bgse.pem -L 10000:localhost:8888 ubuntu@ec2-54-175-118-25.compute-1.amazonaws.com
+
+# if permissions error
+# sudo chown -R ubuntu:ubuntu /home/ubuntu/
+
+scp -r ubuntu@ec2-54-175-118-25.compute-1.amazonaws.com ywc85l9kv6h4axmnstod.mid
